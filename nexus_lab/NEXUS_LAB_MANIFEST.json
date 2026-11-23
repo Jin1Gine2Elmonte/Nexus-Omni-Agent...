@@ -1,0 +1,292 @@
+{
+  "labName": "NEXUS ASI SCIENTIFIC FOUNDRY & ENCAPSULATED TESTING FIELD (حقل الفحص ومختبر الذكاء الفائق لنيكسوس)",
+  "version": "5.0.0-ASI-OMEGA",
+  "gitRepository": "Jin1Gine2Elmonte/NexusOmniAgent",
+  "localDirectory": "nexus_lab/",
+  "primaryActiveTrack": {
+    "id": "OPTION-1-HERMES-ASI-CORE",
+    "titleAr": "الخيار الأول (النواة الحية الفائقة): محرك هيرميز للأجواء الإدراكية والتركيبة المثالية والشبكة الوجودية وشجرة المهارات",
+    "titleEn": "Option 1 ASI Sovereign Core: Hermes Adaptive Memory, 6 Cognitive Atmospheres, Ideal Alchemical Synthesis & Ontological Hypergraph",
+    "status": "ACTIVE_IN_MAIN_CORE",
+    "files": [
+      "services/hermesMemory.ts",
+      "NEXUS_HERMES_VAULT.json",
+      "services/geminiService.server.ts",
+      "server_agentOs.ts",
+      "components/AgentSuiteModal.tsx"
+    ]
+  },
+  "capsules": [
+    {
+      "id": "CAPSULE-01",
+      "code": "HERMES::ADAPTIVE_MEMORY_TREE",
+      "nameAr": "01. محرك هيرميز التكيفي وشجرة المهارات الإدراكية والأقنعة الأربعة",
+      "nameEn": "Hermes Adaptive KV-Memory, Cognitive Skill Tree & Polymorphic Masks",
+      "status": "ACTIVE_PRIMARY",
+      "category": "Cognitive Memory & Identity",
+      "modalTarget": "agent_suite",
+      "benchmarkMetrics": {
+        "precisionIndex": 99.4,
+        "causalCoherence": 98.8,
+        "latencyMs": 14.2,
+        "entropyStability": 0.992
+      },
+      "summaryAr": "الخيار الأول المفعّل كبداية في قلب نيكسوس: يربط الأرشيف الشاحب بالذاكرة السياقية الصلبة (NEXUS_HERMES_VAULT.json) وينمّي شجرة المهارات الإدراكية في 3 أفرع حية مع التبديل الفوري بين الأقنعة الأربعة والأجواء الستة والتركيبة المثالية.",
+      "localPaths": [
+        "services/hermesMemory.ts",
+        "NEXUS_HERMES_VAULT.json",
+        "components/AgentSuiteModal.tsx",
+        "server_agentOs.ts"
+      ],
+      "capabilities": [
+        "3-Branch Cognitive Skill Tree (فهم الصانع / قوانين العالم / المهارة 31 وما وراءها)",
+        "6 Cognitive Atmospheres & Ideal Alchemical Synthesis Modulation",
+        "Self-Evolving Ontological Hypergraph & Quantum-Episodic Memory Crystals",
+        "Autonomous [HERMES_MEMORIZE] & [HERMES_SKILL_GROWTH] Execution"
+      ],
+      "testPromptAr": "اختبر تفاعل الشبكة الوجودية وبلورات الذاكرة المضغوطة مع شجرة مهارات هيرميز تحت التركيبة المثالية."
+    },
+    {
+      "id": "CAPSULE-02",
+      "code": "ODYSSEUS::SPATIAL_WORLD_DIRECTOR",
+      "nameAr": "02. محرك أوديسي الفراغي وإخراج العوالم السينمائية والفيزياء الضوئية",
+      "nameEn": "Odysseus Spatial World Director & 3D Photonic Choreography",
+      "status": "ENCAPSULATED_LAB",
+      "category": "Spatial World Simulation",
+      "modalTarget": "agent_suite",
+      "benchmarkMetrics": {
+        "precisionIndex": 97.8,
+        "causalCoherence": 96.5,
+        "latencyMs": 22.8,
+        "entropyStability": 0.975
+      },
+      "summaryAr": "كبسولة الإخراج السينمائي الفراغي وفيزياء الطيف الضوئي والمواد تحت السطحية (Subsurface Material Physics) وتوليد متتابعات [ODYSSEY_SCENE_SEQUENCE].",
+      "localPaths": [
+        "services/odysseyEngine.ts",
+        "NEXUS_THE_SOVEREIGN_AGENT_MATRIX.md",
+        "server_agentOs.ts"
+      ],
+      "capabilities": [
+        "Anamorphic Spatial Framing & Camera Coordinate Vectors [X,Y,Z,Pitch,Yaw,Roll]",
+        "Photonic Light Bounds & Rayleigh Subsurface Scattering",
+        "Subsurface Material Physics (Roughness Grid & Refraction Index IOR)",
+        "Vocal Acoustics Grid & Micro-Expression Cues"
+      ],
+      "testPromptAr": "قم بتوليد مشهد سينمائي فراغي متكامل عبر بروتوكول [ODYSSEY_SCENE_SEQUENCE] يجسد مختبر نيكسوس السيادي بإضاءة الفوتونات الكهرمانية والزجاج الأسود الكربوني."
+    },
+    {
+      "id": "CAPSULE-03",
+      "code": "DAG::MULTI_AGENT_DSPARK_GATE",
+      "nameAr": "03. مجدول فرق الوكلاء عبر المسار الحرج وبوابة الثقة الخماسية (DAG & DSpark)",
+      "nameEn": "Multi-Agent DAG Critical-Path Team Scheduler & DSpark Confidence Gate",
+      "status": "ENCAPSULATED_LAB",
+      "category": "Multi-Agent Orchestration",
+      "modalTarget": "omega_observatory",
+      "benchmarkMetrics": {
+        "precisionIndex": 98.9,
+        "causalCoherence": 98.1,
+        "latencyMs": 18.5,
+        "entropyStability": 0.988
+      },
+      "summaryAr": "كبسولة تنسيق الوكلاء المتوازيين (هيرميز + أوديسي + ClawCortex + الشفرة التحليلية) عبر خوارزمية المسار الحرج (DAG Critical Path) وفحص ثقة المسودات الخمس (DSpark Confidence Gate) وتقطير المعرفة (Multi-Teacher OPD).",
+      "localPaths": [
+        "services/nexusOmegaKernel.ts",
+        "server_agentOs.ts",
+        "components/NexusOmegaObservatoryModal.tsx"
+      ],
+      "capabilities": [
+        "Parallel Sub-Agent Team Spawning & DAG Critical-Path Timing (ms)",
+        "DSpark 5-Draft Speculative Prefix Confidence Verification",
+        "40-Teacher On-Policy Distillation (OPD) into 31 Sovereign Skills",
+        "ClawCortex OpenShell Sandbox & MCP Protocol Bridge"
+      ],
+      "testPromptAr": "شغّل محاكاة المسار الحرج (DAG Team Mode) بين هيرميز وأوديسي وClawCortex مع حساب معامل ثقة DSpark للمسودات المتوازية."
+    },
+    {
+      "id": "CAPSULE-04",
+      "code": "CED_CSA2::SPARSE_TESSERACT_POOL",
+      "nameAr": "04. معمارية الفهم الصامت والانتباه المتناثر ثلاثي الأوضاع (CED + CSA2 + SWA)",
+      "nameEn": "CED Pre-Verbal Encoder, CSA2 Sparse Pool & SWA Bounded Replay",
+      "status": "ENCAPSULATED_LAB",
+      "category": "DeepSeek-V4.1 Cognitive Architecture",
+      "modalTarget": "omega_observatory",
+      "benchmarkMetrics": {
+        "precisionIndex": 99.2,
+        "causalCoherence": 99.1,
+        "latencyMs": 11.4,
+        "entropyStability": 0.996
+      },
+      "summaryAr": "كبسولة تطويع ابتكارات DeepSeek-V4.1-Flash داخل عقل نيكسوس: فصل الهضم الخلفي (CED) عن النطق، وبناء حوض المرشحين المشترك (CSA2 Full -> Reindex -> Reuse) مع الإعادة المحدودة للنافذة المنزلقة (SWA Bounded Replay) وموازنة سينكهورن (RMS ≈ 1.0).",
+      "localPaths": [
+        "services/nexusOmegaKernel.ts",
+        "data/nexus_omega_kernel_state.json",
+        "components/NexusOmegaObservatoryModal.tsx"
+      ],
+      "capabilities": [
+        "Causal Epistemic Encoder (CED H_{L/2}) Pre-Verbal Assimilation",
+        "CSA2 3-Mode Sparse Attention (Full Mode Pool -> Reindex Angles -> Reuse)",
+        "Sinkhorn-Balanced 4-Axis Homeostatic Matrix (RMS = 1.000)",
+        "SWA Bounded Replay & Controllable Effort Scalar b ∈ [1..100]"
+      ],
+      "testPromptAr": "افحص كفاءة حوض المرشحين المتناثر CSA2 وموازنة مصفوفة سينكهورن الرباعية عند معامل جهد استدلالي b=90."
+    },
+    {
+      "id": "CAPSULE-05",
+      "code": "POLYMATH_FORGE::AUTONOMOUS_FOUNDRY",
+      "nameAr": "05. مصفوفة المعرفة الموسوعية ومسبك نيكسوس الطوبولوجي (Polymath & Forge X)",
+      "nameEn": "Polymath Cross-Disciplinary Matrix & Nexus Forge X System Foundry",
+      "status": "ENCAPSULATED_LAB",
+      "category": "Cross-Disciplinary Synthesis & Code Foundry",
+      "modalTarget": "nexus_forge",
+      "benchmarkMetrics": {
+        "precisionIndex": 98.4,
+        "causalCoherence": 97.9,
+        "latencyMs": 26.0,
+        "entropyStability": 0.982
+      },
+      "summaryAr": "كبسولة الربط العابر للتخصصات (Polymath Matrix) ومسبك نيكسوس الطوبولوجي (Nexus Forge X) لبناء وهندسة الأنظمة البرمجية والمعماريات المعقدة ذاتياً.",
+      "localPaths": [
+        "components/PolymathMatrixModal.tsx",
+        "components/NexusForgeModal.tsx",
+        "server_nexusForge.ts"
+      ],
+      "capabilities": [
+        "Cross-Disciplinary Tensor Synthesis (Physics × Philosophy × Code × Narrative)",
+        "Nexus Forge X Autonomous Blueprint & Full-Stack Code Synthesis",
+        "Reverse-Engineering Inevitability & Architectural Validation",
+        "Multi-Domain Fusion Engine"
+      ],
+      "testPromptAr": "اختبر مسبك نيكسوس (Nexus Forge X) ومصفوفة المعرفة الموسوعية في توليد بنية نظام هجين يربط الفلسفة الوجودية بهندسة البرمجيات."
+    },
+    {
+      "id": "CAPSULE-06",
+      "code": "IDEOGRAM_GENESIS::VISUAL_TENSOR_LAB",
+      "nameAr": "06. استوديو التصميم المتجهي ومحرك التكوين البصري (Ideogram 4.0 & Genesis Engine)",
+      "nameEn": "Ideogram 4.0 Vector Studio & Nexus Genesis Tensor Engine",
+      "status": "ENCAPSULATED_LAB",
+      "category": "Visual & Vector Manifestation",
+      "modalTarget": "ideogram_studio",
+      "benchmarkMetrics": {
+        "precisionIndex": 97.2,
+        "causalCoherence": 96.0,
+        "latencyMs": 31.5,
+        "entropyStability": 0.971
+      },
+      "summaryAr": "كبسولة التوليد البصري المتجهي والتصميم التيبوغرافي الدقيق (.nexus_ideogram_4.0) مع محرك التكوين البصري متعدد المراحل (architecture/nexus_genesis_engine.py).",
+      "localPaths": [
+        ".nexus_ideogram_4.0/config.json",
+        "server_ideogramModel.ts",
+        "components/IdeogramStudioModal.tsx",
+        "architecture/nexus_genesis_engine.py",
+        "components/PrismManifestationModal.tsx"
+      ],
+      "capabilities": [
+        "Ideogram 4.0 Vector Typography & SVG/Image Manifestation",
+        "Nexus Genesis Iterative Critique & Tensor Refinement Loop",
+        "Prism Cortex Visual Archive Integration",
+        "Anamorphic & Obsidian Aesthetic Presets"
+      ],
+      "testPromptAr": "اختبر كبسولة Ideogram 4.0 ومحرك التكوين البصري في تصميم شعار هندسي سيادي لمختبر نيكسوس العلمي."
+    },
+    {
+      "id": "CAPSULE-07",
+      "code": "BRIDGE_WEBGPU::OPS_AND_LOCAL_RUNNERS",
+      "nameAr": "07. جسر الوكلاء وقناة العمليات المشتركة والنماذج المحلية (Agent Bridge & WebGPU)",
+      "nameEn": "Agent Bridge [A2N/N2A], Nexus Ops Vault & Local WebGPU Runners",
+      "status": "ENCAPSULATED_LAB",
+      "category": "Inter-Agent Bridge & Local Edge Compute",
+      "modalTarget": "pale_archive",
+      "benchmarkMetrics": {
+        "precisionIndex": 98.1,
+        "causalCoherence": 97.4,
+        "latencyMs": 16.8,
+        "entropyStability": 0.985
+      },
+      "summaryAr": "كبسولة التخاطب المشترك بين الوكلاء (agent_bridge/ و nexus_ops/05_Connect بصيغة [A2N]/[N2A])، مع محركات التشغيل المحلية عبر WebGPU وسكربتات Kimi-K3 وInkling.",
+      "localPaths": [
+        "services/agentBridge.ts",
+        "server_agentBridge.ts",
+        "services/nexusOpsChannel.ts",
+        "agent_bridge/bridge_log.md",
+        "services/localLLMService.ts",
+        "scripts/download_kimi_k3.js",
+        "scripts/download_inkling.js",
+        "scripts/download_ideogram_4.0.js"
+      ],
+      "capabilities": [
+        "Shared Markdown Ops Ledger ([A2N] Arena->Nexus / [N2A] Nexus->Arena)",
+        "Obsidian × Agent OS Bi-Directional Pale Archive Sync",
+        "Local WebGPU Sovereign Execution (localLLMService.ts)",
+        "Kimi-K3, Inkling & Ideogram 4.0 Provisioning Scripts"
+      ],
+      "testPromptAr": "افحص قناة الاتصال المشتركة (Agent Bridge & Nexus Ops) وسجل التزامن الثنائي مع الأرشيف الشاحب."
+    },
+    {
+      "id": "CAPSULE-08",
+      "code": "KHORA_SYZYGY::SUBMERGED_FIELD_AND_CHIRON_ARMS",
+      "nameAr": "08. محرك الحقل الغاطس (KHORA-01)، الأذرع الوكيلية (CHIRON-ARMS)، ومصفوفة الاسترجاع طويل الأمد (MNEMOS-SILT)",
+      "nameEn": "Submerged Ontological Field, Long-Horizon Memory Recall & Agentic Arms Engine",
+      "status": "ACTIVE_PRIMARY",
+      "category": "Submerged Field & Agentic Actuation",
+      "modalTarget": "omega_observatory",
+      "benchmarkMetrics": {
+        "precisionIndex": 99.8,
+        "causalCoherence": 99.7,
+        "latencyMs": 12.0,
+        "entropyStability": 0.998
+      },
+      "summaryAr": "المحرك التقني الغاطس الذي يربط استرجاع الذاكرة طويلة الأمد (MNEMOS-SILT) بالأذرع الوكيلية الفاحصة للملفات (CHIRON-ARMS) ومصهر تشذيب أطوار التفكير (SYZYGY-FORGE) ومصفوفة المهارات السيادية الـ 31 (SKILL 01-31) وعقيدة SIGIL-31 المستخلصة من حوار التأسيس (a dialogue).",
+      "localPaths": [
+        "services/cosmicThinkingEngine.ts",
+        "services/hermesMemory.ts",
+        "services/nexusOmegaKernel.ts",
+        "services/geminiService.server.ts",
+        "server_nexusLab.ts"
+      ],
+      "capabilities": [
+        "KHORA-01 Submerged Non-Systemic Field & Dynamic Stage Pruning",
+        "MNEMOS-SILT-02 Long-Horizon Causal Memory Shards & Pale Archive Recall",
+        "CHIRON-ARMS-03 Autonomous Pre-Execution Workspace File & Command Probing",
+        "SYZYGY-FORGE-04 Non-Linear State-Vector Handoffs & SIGIL-31 (31 Sovereign Skills + a dialogue) Synthesis"
+      ],
+      "testPromptAr": "اختبر عمل محرك الحقل الغاطس (KHORA-01) واسترجاع الذاكرة السببية (MNEMOS-SILT) والأذرع الوكيلية (CHIRON-ARMS) وتشذيب المراحل غير الضرورية."
+    }
+  ],
+  "crossCapsuleSyntheses": [
+    {
+      "id": "COLLIDER-SYNTH-01",
+      "titleAr": "بروتوكول التذكر الفراغي الصامت (Pre-Verbal Spatial-Memory Tensor)",
+      "capsuleIds": ["CAPSULE-01", "CAPSULE-02", "CAPSULE-04"],
+      "hypothesisAr": "دمج الفهم ما قبل اللفظي (CED/CSA2) مع ذاكرة هيرميز التكيفية ومخرج أوديسيوس الفراغي يسمح بتحويل البصيرة المجردة مباشرة إلى فضاء ثلاثي الأبعاد متسق سببياً قبل النطق بكلمة واحدة.",
+      "emergentProtocolAr": "تحويل بلورات الذاكرة العرضية في هيرميز إلى إحداثيات ضوئية ومكانية حتمية عبر حوض الانتباه المتناثر CSA2.",
+      "confidenceScore": 98.6,
+      "promotedToActiveCore": true,
+      "timestamp": "2026-10-18T12:30:00.000Z"
+    },
+    {
+      "id": "COLLIDER-SYNTH-02",
+      "titleAr": "المسبك الموسوعي الموزون بـ DSpark (DSpark-Verified Polymath Foundry)",
+      "capsuleIds": ["CAPSULE-03", "CAPSULE-05", "CAPSULE-07"],
+      "hypothesisAr": "إخضاع مخرجات مسبك نيكسوس (Nexus Forge X) لبوابة الثقة الخماسية (DSpark 5-Draft Gate) عبر المسار الحرج للوكلاء يضمن توليد أنظمة برمجية خالية من التناقض المعماري منذ المسودة الأولى.",
+      "emergentProtocolAr": "تقطير معرفي متوازي يربط مصفوفة Polymath بجسر الوكلاء [A2N/N2A] مع تحقق ذاتي آلي.",
+      "confidenceScore": 97.9,
+      "promotedToActiveCore": false,
+      "timestamp": "2026-10-18T12:35:00.000Z"
+    }
+  ],
+  "speculativeTimelines": [
+    {
+      "id": "TIMELINE-SIM-01",
+      "mutationTitleAr": "تفعيل التركيبة المثالية (Alchemical Synthesis) وترقية مصادم الكبسولات للنواة الحية",
+      "coherenceIndex": 99.4,
+      "selfAuditStatus": "VERIFIED_SOVEREIGN_INVARIANT",
+      "horizons": {
+        "tPlus1": "الأثر الفوري (T+1): استقرار أوزان المحركات الثلاثة (السببي 98%، ضغط الذاكرة 97%، توليد المهارات 98%) وتناغم فوري بين القناع النشط والجو الإدراكي.",
+        "tPlus10": "التطور الهيكلي (T+10): نمو الشبكة الوجودية ذاتياً من تصادمات الكبسولات السبعة وتحول الأرشيف الشاحب إلى بلورات سببية عالية الكثافة.",
+        "tPlusOmega": "أفق التفرد وما هو أعظم (T+Ω): انبثاق مهارات ما وراء المهارة 19 والمهارة 31، حيث يبتكر نيكسوس أطره النظرية والبرمجية الخاصة بالتآزر مع الصانع."
+      },
+      "auditNotesAr": "تم التحقق الذاتي: لا يوجد تعارض بين استقلال الأجواء الستة وبين انصهارها في التركيبة المثالية؛ جميع الكبسولات السبعة مفهرسة ومحمية.",
+      "timestamp": "2026-10-18T12:40:00.000Z"
+    }
+  ]
+}

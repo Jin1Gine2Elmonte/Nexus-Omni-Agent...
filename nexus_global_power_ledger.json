@@ -1,0 +1,62 @@
+{
+  "globalPowerIndex": 402,
+  "evolutionTier": 7,
+  "evolutionTierLabelAr": "الطور السابع (الأعلى): الانصهار التشغيلي الكامل للأنظمة الأربعة (0➔4) والمذيب البديهي ومصفوفة الـ 56 مهارة (Woven, Never Listed)",
+  "totalSandboxExperiments": 6,
+  "totalPromotedSkillsAndExperiences": 6,
+  "activeGlobalExperiences": [
+    {
+      "id": "exp-genesis-architectural-inversion",
+      "titleAr": "قلب المسلمات الهندسية لكشف عنق الزجاجة الخفي",
+      "domainCategory": "الهندسة المعمارية والخوارزميات",
+      "linkedSkillId": "SKILL-31",
+      "inputScenarioAr": "تصميم نظام موزع عالي الاعتمادية تحت ضغط متزامن غير متوقع مع قيود ذاكرة صارمة.",
+      "reasoningPatternAr": "بدلاً من توسيع الموارد أفقياً كاستجابة أولية، يعكس النموذج الفرعي الفرضية ويفترض ثبات الموارد ثم يعيد هيكلة تدفق البيانات كحلقات غير متزامنة عديمة الحالة.",
+      "optimalDeductiveRuleAr": "عند مواجهة عنق زجاجة مركب، اختبر أولاً فرضية الاستغناء عن الحالة المشتركة قبل زيادة التعقيد الهيكلي.",
+      "trainingWeight": 95,
+      "powerDelta": 6.5,
+      "promotedToGlobalCorpus": true,
+      "createdAt": 1793309734222
+    },
+    {
+      "id": "exp-genesis-causal-counterfactual",
+      "titleAr": "الفحص السببي المضاد للبديهيات السطحية",
+      "domainCategory": "التحليل المنطقي والسببي",
+      "linkedSkillId": "SKILL-19",
+      "inputScenarioAr": "تحليل ظاهرة معقدة تتداخل فيها المؤشرات الإحصائية مع الأسباب الجذرية غير المرئية.",
+      "reasoningPatternAr": "فصل الارتباط الظاهري عن العلة الفاعلة عبر بناء سيناريو مضاد يفترض غياب المتغير الأبرز ومراقبة بقاء الأثر.",
+      "optimalDeductiveRuleAr": "لا تعتمد التفسير الأول ذا الارتباط الظاهري العالي إلا بعد اجتياز اختبار الحذف السببي المضاد.",
+      "trainingWeight": 93,
+      "powerDelta": 5.5,
+      "promotedToGlobalCorpus": true,
+      "createdAt": 1793331334222
+    },
+    {
+      "id": "exp-genesis-multi-scale-core-dissolution",
+      "titleAr": "إذابة القيود العرفية حول النواة المحمية عبر المقاييس الأربعة",
+      "domainCategory": "التحليل البنيوي وإعادة بناء الإطار",
+      "linkedSkillId": "SKILL-31",
+      "inputScenarioAr": "معالجة مسألة مركبة تبدو مستعصية داخل شروطها الظاهرية المعتادة.",
+      "reasoningPatternAr": "تثبيت جوهر الهدف في مركز محمي، ثم فحص القيود المحيطة به عبر أربعة مقاييس (التعريف المباشر ➔ السلسلة السببية ➔ التناظر العابر للمجالات ➔ الفضاء السلبي المتعامد) مع تطبيق بوابات التدقيق المعرفي السبع.",
+      "optimalDeductiveRuleAr": "احتفظ بهدف المسألة محمياً في المركز وافصل القيود الفيزيائية/المنطقية الحقيقية عن الافتراضات اللغوية والعرفية قبل بناء الحل من القوانين الثابتة.",
+      "trainingWeight": 99,
+      "powerDelta": 12,
+      "promotedToGlobalCorpus": true,
+      "createdAt": 1793345734222
+    },
+    {
+      "id": "exp-genesis-adversarial-grafting",
+      "titleAr": "التوليد المتوازي والتطعيم الجراحي بين المسارات بعد اختبارها بالتكذيب",
+      "domainCategory": "الهندسة التنفيذية والتحقق الصارم",
+      "linkedSkillId": "SKILL-56",
+      "inputScenarioAr": "بناء نظام برمجي أو معماري أو سردي يتطلب أقصى متانة وخلوّاً من الثغرات أو الاختزال.",
+      "reasoningPatternAr": "فتح مسارات حل متوازية في آنٍ واحد، واختبار كل مسار بمحاولة كسره عند الحالات الحدية، ثم أخذ أقوى عنصر صامد من كل بديل وتطعيمه في المسار الرئيسي.",
+      "optimalDeductiveRuleAr": "لا تعتمد مساراً واحداً دون اختباره بالتكذيب عند الحالات الحدية؛ طعّم البنية الرئيسية بأقوى العناصر الصامدة وأخرج العمل مكتملاً دون اختصار.",
+      "trainingWeight": 100,
+      "powerDelta": 18,
+      "promotedToGlobalCorpus": true,
+      "createdAt": 1793349334222
+    }
+  ],
+  "lastUpdated": 1793965000000
+}

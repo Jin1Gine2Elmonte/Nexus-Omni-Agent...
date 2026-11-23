@@ -1,0 +1,541 @@
+{
+  "entities": {
+    "UserWorkspace": {
+      "title": "UserWorkspace",
+      "description": "Root cloud workspace document for an authenticated Nexus user.",
+      "type": "object",
+      "properties": {
+        "ownerId": {
+          "type": "string",
+          "description": "Firebase Auth UID of the workspace owner.",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "displayName": {
+          "type": "string",
+          "description": "Display name of the operator.",
+          "minLength": 1,
+          "maxLength": 120
+        },
+        "photoURL": {
+          "type": "string",
+          "description": "Avatar URL of the operator.",
+          "minLength": 0,
+          "maxLength": 500
+        },
+        "activeSessionId": {
+          "type": "string",
+          "description": "ID of the most recently active chat session.",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "soulPrintDepth": {
+          "type": "string",
+          "description": "Learned intellectual depth preference.",
+          "enum": ["surface", "curious", "deep", "sovereign"],
+          "maxLength": 32
+        },
+        "soulPrintTone": {
+          "type": "string",
+          "description": "Learned tone preference.",
+          "enum": ["poetic", "analytical", "conversational", "raw"],
+          "maxLength": 32
+        },
+        "trustLevel": {
+          "type": "integer",
+          "description": "Cumulative trust level scalar."
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Server timestamp when workspace was initialized."
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Server timestamp when workspace was last updated."
+        }
+      },
+      "required": [
+        "ownerId",
+        "displayName",
+        "photoURL",
+        "activeSessionId",
+        "soulPrintDepth",
+        "soulPrintTone",
+        "trustLevel",
+        "createdAt",
+        "updatedAt"
+      ]
+    },
+    "ChatSession": {
+      "title": "ChatSession",
+      "description": "A cloud-synced Nexus conversation thread belonging to a user.",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Session identifier.",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "ownerId": {
+          "type": "string",
+          "description": "Firebase Auth UID of the session owner.",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "title": {
+          "type": "string",
+          "description": "Human-readable session title.",
+          "minLength": 1,
+          "maxLength": 200
+        },
+        "messageCount": {
+          "type": "integer",
+          "description": "Number of messages in the session."
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Server timestamp of creation."
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Server timestamp of last activity."
+        }
+      },
+      "required": [
+        "id",
+        "ownerId",
+        "title",
+        "messageCount",
+        "createdAt",
+        "updatedAt"
+      ]
+    },
+    "ChatMessage": {
+      "title": "ChatMessage",
+      "description": "An individual message within a user's cloud-synced session.",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique message identifier.",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "sessionId": {
+          "type": "string",
+          "description": "Parent session identifier.",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "ownerId": {
+          "type": "string",
+          "description": "Firebase Auth UID of the message owner.",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "role": {
+          "type": "string",
+          "description": "Sender role.",
+          "enum": ["user", "model"],
+          "maxLength": 16
+        },
+        "content": {
+          "type": "string",
+          "description": "Message markdown body.",
+          "minLength": 1,
+          "maxLength": 100000
+        },
+        "isThinking": {
+          "type": "boolean",
+          "description": "Whether this message represents internal cognitive synthesis."
+        },
+        "routedModel": {
+          "type": "string",
+          "description": "Sovereign engine that processed the message.",
+          "minLength": 1,
+          "maxLength": 80
+        },
+        "orderIndex": {
+          "type": "integer",
+          "description": "Sequential message index within the session."
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Server timestamp when message was recorded."
+        }
+      },
+      "required": [
+        "id",
+        "sessionId",
+        "ownerId",
+        "role",
+        "content",
+        "isThinking",
+        "routedModel",
+        "orderIndex",
+        "createdAt"
+      ]
+    },
+    "MemoryAxiom": {
+      "title": "MemoryAxiom",
+      "description": "A crystallized long-term memory axiom belonging to a user.",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique axiom identifier.",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "ownerId": {
+          "type": "string",
+          "description": "Firebase Auth UID of the axiom owner.",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "content": {
+          "type": "string",
+          "description": "Distilled axiom truth.",
+          "minLength": 1,
+          "maxLength": 5000
+        },
+        "category": {
+          "type": "string",
+          "description": "Classification of the axiom.",
+          "enum": ["identity", "world_building", "preference", "absolute_truth"],
+          "maxLength": 32
+        },
+        "sourceSessionId": {
+          "type": "string",
+          "description": "Origin session ID.",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Server timestamp when axiom was crystallized."
+        }
+      },
+      "required": [
+        "id",
+        "ownerId",
+        "content",
+        "category",
+        "sourceSessionId",
+        "createdAt"
+      ]
+    },
+    "LearnedInsight": {
+      "title": "LearnedInsight",
+      "description": "Continuous user learning record and sanitized message pattern that improves response quality over time.",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique insight ID.",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "ownerId": {
+          "type": "string",
+          "description": "Firebase Auth UID of the owner.",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "topic": {
+          "type": "string",
+          "description": "Topic and skill classification.",
+          "minLength": 1,
+          "maxLength": 120
+        },
+        "learnedRule": {
+          "type": "string",
+          "description": "Distilled adaptive rule learned from the user.",
+          "minLength": 1,
+          "maxLength": 500
+        },
+        "sanitizedMessageExcerpt": {
+          "type": "string",
+          "description": "Sanitized user message with PII and secrets replaced by encrypted vault tokens.",
+          "minLength": 1,
+          "maxLength": 600
+        },
+        "encryptedRefsCount": {
+          "type": "integer",
+          "description": "Number of secrets encrypted from this message."
+        },
+        "qualityImpactScore": {
+          "type": "integer",
+          "description": "Quality improvement score (1-100)."
+        },
+        "orbitId": {
+          "type": "string",
+          "description": "Associated cognitive orbit ID.",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Server timestamp when insight was recorded."
+        }
+      },
+      "required": [
+        "id",
+        "ownerId",
+        "topic",
+        "learnedRule",
+        "sanitizedMessageExcerpt",
+        "encryptedRefsCount",
+        "qualityImpactScore",
+        "orbitId",
+        "createdAt"
+      ]
+    },
+    "EncryptedSecret": {
+      "title": "EncryptedSecret",
+      "description": "Zero-knowledge encrypted secret entry protecting user passwords, addresses, private names, and keys.",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique secret identifier.",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "ownerId": {
+          "type": "string",
+          "description": "Firebase Auth UID of the secret owner.",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "secretType": {
+          "type": "string",
+          "description": "Category of encrypted secret.",
+          "enum": ["password", "address", "identity_name", "api_key", "private_note"],
+          "maxLength": 32
+        },
+        "label": {
+          "type": "string",
+          "description": "Non-sensitive human-readable label.",
+          "minLength": 1,
+          "maxLength": 80
+        },
+        "redactionToken": {
+          "type": "string",
+          "description": "Token used in sanitized messages.",
+          "minLength": 1,
+          "maxLength": 64
+        },
+        "cipherText": {
+          "type": "string",
+          "description": "Encrypted hex payload.",
+          "minLength": 2,
+          "maxLength": 4096
+        },
+        "iv": {
+          "type": "string",
+          "description": "Initialization vector hex.",
+          "minLength": 2,
+          "maxLength": 64
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Server timestamp of encryption."
+        }
+      },
+      "required": [
+        "id",
+        "ownerId",
+        "secretType",
+        "label",
+        "redactionToken",
+        "cipherText",
+        "iv",
+        "createdAt"
+      ]
+    },
+    "CognitiveOrbitDoc": {
+      "title": "CognitiveOrbitDoc",
+      "description": "User-specific cognitive orbit tracking quality and autonomous orbit discovery.",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Orbit identifier.",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "ownerId": {
+          "type": "string",
+          "description": "Firebase Auth UID of the orbit owner.",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "nameAr": {
+          "type": "string",
+          "description": "Arabic orbit name.",
+          "minLength": 1,
+          "maxLength": 120
+        },
+        "nameEn": {
+          "type": "string",
+          "description": "English orbit name.",
+          "minLength": 1,
+          "maxLength": 120
+        },
+        "domainCategory": {
+          "type": "string",
+          "description": "Domain classification.",
+          "minLength": 1,
+          "maxLength": 64
+        },
+        "qualityScore": {
+          "type": "integer",
+          "description": "Orbit quality and maturity score (0-100)."
+        },
+        "resonanceCount": {
+          "type": "integer",
+          "description": "Number of times this orbit resonated with user interactions."
+        },
+        "isDiscovered": {
+          "type": "boolean",
+          "description": "Whether the user has unlocked/discovered this orbit."
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Server timestamp of last orbit evolution."
+        }
+      },
+      "required": [
+        "id",
+        "ownerId",
+        "nameAr",
+        "nameEn",
+        "domainCategory",
+        "qualityScore",
+        "resonanceCount",
+        "isDiscovered",
+        "updatedAt"
+      ]
+    },
+    "SkillVisualEvolutionDoc": {
+      "title": "SkillVisualEvolutionDoc",
+      "description": "Tracks usage-driven visual specialization and quality progression for each of the 31 Sovereign Skills.",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Skill identifier (SKILL-01 to SKILL-31).",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "ownerId": {
+          "type": "string",
+          "description": "Firebase Auth UID of the owner.",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "skillNumber": {
+          "type": "integer",
+          "description": "Canonical skill number (1-100)."
+        },
+        "usageCount": {
+          "type": "integer",
+          "description": "Cumulative invocations by this user."
+        },
+        "visualQualityScore": {
+          "type": "integer",
+          "description": "Specialized visual quality score (10-100)."
+        },
+        "visualTier": {
+          "type": "integer",
+          "description": "Visual evolution tier (1-4)."
+        },
+        "specializedPromptSignature": {
+          "type": "string",
+          "description": "Enriched visual prompt signature for this skill.",
+          "minLength": 1,
+          "maxLength": 1200
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Server timestamp of last skill evolution."
+        }
+      },
+      "required": [
+        "id",
+        "ownerId",
+        "skillNumber",
+        "usageCount",
+        "visualQualityScore",
+        "visualTier",
+        "specializedPromptSignature",
+        "updatedAt"
+      ]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": { "$ref": "#/entities/UserWorkspace" },
+      "description": "Root workspace profile and soulPrint synchronization state for each authenticated user."
+    },
+    "/users/{userId}/sessions/{sessionId}": {
+      "schema": { "$ref": "#/entities/ChatSession" },
+      "description": "Cloud-synced chat session metadata for a specific user."
+    },
+    "/users/{userId}/sessions/{sessionId}/messages/{messageId}": {
+      "schema": { "$ref": "#/entities/ChatMessage" },
+      "description": "Ordered chat messages belonging to a specific cloud session."
+    },
+    "/users/{userId}/axioms/{axiomId}": {
+      "schema": { "$ref": "#/entities/MemoryAxiom" },
+      "description": "Long-term crystallized memory axioms belonging to a specific user."
+    },
+    "/users/{userId}/learnedInsights/{insightId}": {
+      "schema": { "$ref": "#/entities/LearnedInsight" },
+      "description": "Continuous user learning records and sanitized quality-improving message insights."
+    },
+    "/users/{userId}/encryptedSecrets/{secretId}": {
+      "schema": { "$ref": "#/entities/EncryptedSecret" },
+      "description": "Zero-knowledge encrypted vault entries protecting user passwords, addresses, and private names."
+    },
+    "/users/{userId}/orbits/{orbitId}": {
+      "schema": { "$ref": "#/entities/CognitiveOrbitDoc" },
+      "description": "User-adaptive cognitive orbits and autonomous orbit discovery records."
+    },
+    "/users/{userId}/skillEvolutions/{skillId}": {
+      "schema": { "$ref": "#/entities/SkillVisualEvolutionDoc" },
+      "description": "Per-user visual specialization and quality progression across the Sovereign Skills."
+    }
+  }
+}

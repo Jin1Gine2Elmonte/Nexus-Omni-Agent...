@@ -1,0 +1,44 @@
+[
+  {
+    "id": "TERM-MWQHZV57-PJJ",
+    "actor": "nexus_agent",
+    "lang": "python",
+    "purpose": "المسبار التلقائي لبيئة التشغيل السيادية، فحص كثافة كولموغوروف، وتكامل التيرمنال مع بقية الأدوات",
+    "commandOrCode": "import os, sys, math, platform, hashlib, shutil, json\nroot = os.environ.get(\"NEXUS_WORKSPACE_ROOT\", os.getcwd())\nif root not in sys.path:\n    sys.path.insert(0, root)\nout_dir = os.environ.get(\"NEXUS_OUTPUT_DIR\", os.getcwd())\nts_files = []\ntotal_bytes = 0\nfor dp, dn, fn in os.walk(root):\n    if any(skip in dp for skip in [\"node_modules\", \".git\", \"dist\"]):\n        continue\n    for f in fn:\n        if f.endswith((\".ts\", \".tsx\", \".py\", \".json\", \".md\")):\n            fp = os.path.join(dp, f)\n            try:\n                sz = os.path.getsize(fp)\n                ts_files.append((f, sz))\n                total_bytes += sz\n            except Exception:\n                pass\nffmpeg_bin = shutil.which(\"ffmpeg\") or \"none\"\nnode_bin = shutil.which(\"node\") or \"none\"\nsqlite_bin = shutil.which(\"sqlite3\") or \"none\"\nprompt_text = \"Search online for the latest stable Node.js LTS version and explain in 2 concise sentences in English.\"\nprompt_hash = hashlib.sha256(prompt_text.encode(\"utf-8\")).hexdigest()[:12]\n\nkernel_summary = \"\"\ntry:\n    from nexus_knowledge_kernel import KolmogorovSemanticIndexer\n    idx = KolmogorovSemanticIndexer()\n    comp = idx.measure_compression_density(prompt_text)\n    kernel_summary = f\" | MDL Density: {comp['semantic_density']} (Entropy={comp['shannon_entropy_bits']}b)\"\nexcept Exception:\n    pass\n\nprint(f\"[NEXUS-OMNI-RUNTIME] Python {platform.python_version()} on {platform.system()} ({platform.machine()}) | FFmpeg: {ffmpeg_bin} | Node: {node_bin} | SQLite3: {sqlite_bin}{kernel_summary}\")\nprint(f\"[NEXUS-OMNI-RUNTIME] Output Forge Dir: {out_dir} | Workspace Files: {len(ts_files)} ({round(total_bytes/1024, 1)} KB) | TaskHash: {prompt_hash}\")",
+    "stdout": "[NEXUS-OMNI-RUNTIME] Python 3.11.2 on Linux (x86_64) | FFmpeg: /usr/bin/ffmpeg | Node: /usr/local/bin/node | SQLite3: none | MDL Density: 0.8027 (Entropy=4.136b)\n[NEXUS-OMNI-RUNTIME] Output Forge Dir: /tmp/nexus_runtime_artifacts/generated_files | Workspace Files: 259 (29449.2 KB) | TaskHash: 3c88e0797bc5",
+    "stderr": "",
+    "exitCode": 0,
+    "durationMs": 396,
+    "generatedFiles": [],
+    "generatedArtifacts": [],
+    "timestamp": 1795270992631
+  },
+  {
+    "id": "TERM-MWQHUPCV-I7K",
+    "actor": "nexus_agent",
+    "lang": "python",
+    "purpose": "المسبار التلقائي لبيئة التشغيل السيادية، فحص كثافة كولموغوروف، وتكامل التيرمنال مع بقية الأدوات",
+    "commandOrCode": "import os, sys, math, platform, hashlib, shutil, json\nroot = os.environ.get(\"NEXUS_WORKSPACE_ROOT\", os.getcwd())\nif root not in sys.path:\n    sys.path.insert(0, root)\nout_dir = os.environ.get(\"NEXUS_OUTPUT_DIR\", os.getcwd())\nts_files = []\ntotal_bytes = 0\nfor dp, dn, fn in os.walk(root):\n    if any(skip in dp for skip in [\"node_modules\", \".git\", \"dist\"]):\n        continue\n    for f in fn:\n        if f.endswith((\".ts\", \".tsx\", \".py\", \".json\", \".md\")):\n            fp = os.path.join(dp, f)\n            try:\n                sz = os.path.getsize(fp)\n                ts_files.append((f, sz))\n                total_bytes += sz\n            except Exception:\n                pass\nffmpeg_bin = shutil.which(\"ffmpeg\") or \"none\"\nnode_bin = shutil.which(\"node\") or \"none\"\nsqlite_bin = shutil.which(\"sqlite3\") or \"none\"\nprompt_text = \"Search online for the latest stable Node.js LTS version number and summarize in 2 concise sentences in English.\"\nprompt_hash = hashlib.sha256(prompt_text.encode(\"utf-8\")).hexdigest()[:12]\n\nkernel_summary = \"\"\ntry:\n    from nexus_knowledge_kernel import KolmogorovSemanticIndexer\n    idx = KolmogorovSemanticIndexer()\n    comp = idx.measure_compression_density(prompt_text)\n    kernel_summary = f\" | MDL Density: {comp['semantic_density']} (Entropy={comp['shannon_entropy_bits']}b)\"\nexcept Exception:\n    pass\n\nprint(f\"[NEXUS-OMNI-RUNTIME] Python {platform.python_version()} on {platform.system()} ({platform.machine()}) | FFmpeg: {ffmpeg_bin} | Node: {node_bin} | SQLite3: {sqlite_bin}{kernel_summary}\")\nprint(f\"[NEXUS-OMNI-RUNTIME] Output Forge Dir: {out_dir} | Workspace Files: {len(ts_files)} ({round(total_bytes/1024, 1)} KB) | TaskHash: {prompt_hash}\")",
+    "stdout": "[NEXUS-OMNI-RUNTIME] Python 3.11.2 on Linux (x86_64) | FFmpeg: /usr/bin/ffmpeg | Node: /usr/local/bin/node | SQLite3: none | MDL Density: 0.8118 (Entropy=4.22b)\n[NEXUS-OMNI-RUNTIME] Output Forge Dir: /tmp/nexus_runtime_artifacts/generated_files | Workspace Files: 259 (29442.7 KB) | TaskHash: 87c472883cfd",
+    "stderr": "",
+    "exitCode": 0,
+    "durationMs": 346,
+    "generatedFiles": [],
+    "generatedArtifacts": [],
+    "timestamp": 1795270751801
+  },
+  {
+    "id": "TERM-MWQHQMNF-QUF",
+    "actor": "nexus_agent",
+    "lang": "python",
+    "purpose": "المسبار التلقائي لبيئة التشغيل السيادية، فحص كثافة كولموغوروف، وتكامل التيرمنال مع بقية الأدوات",
+    "commandOrCode": "import os, sys, math, platform, hashlib, shutil, json\nroot = os.environ.get(\"NEXUS_WORKSPACE_ROOT\", os.getcwd())\nif root not in sys.path:\n    sys.path.insert(0, root)\nout_dir = os.environ.get(\"NEXUS_OUTPUT_DIR\", os.getcwd())\nts_files = []\ntotal_bytes = 0\nfor dp, dn, fn in os.walk(root):\n    if any(skip in dp for skip in [\"node_modules\", \".git\", \"dist\"]):\n        continue\n    for f in fn:\n        if f.endswith((\".ts\", \".tsx\", \".py\", \".json\", \".md\")):\n            fp = os.path.join(dp, f)\n            try:\n                sz = os.path.getsize(fp)\n                ts_files.append((f, sz))\n                total_bytes += sz\n            except Exception:\n                pass\nffmpeg_bin = shutil.which(\"ffmpeg\") or \"none\"\nnode_bin = shutil.which(\"node\") or \"none\"\nsqlite_bin = shutil.which(\"sqlite3\") or \"none\"\nprompt_text = \"Search online for the latest stable Node.js LTS version number and summarize in 2 concise sentences in English.\"\nprompt_hash = hashlib.sha256(prompt_text.encode(\"utf-8\")).hexdigest()[:12]\n\nkernel_summary = \"\"\ntry:\n    from nexus_knowledge_kernel import KolmogorovSemanticIndexer\n    idx = KolmogorovSemanticIndexer()\n    comp = idx.measure_compression_density(prompt_text)\n    kernel_summary = f\" | MDL Density: {comp['semantic_density']} (Entropy={comp['shannon_entropy_bits']}b)\"\nexcept Exception:\n    pass\n\nprint(f\"[NEXUS-OMNI-RUNTIME] Python {platform.python_version()} on {platform.system()} ({platform.machine()}) | FFmpeg: {ffmpeg_bin} | Node: {node_bin} | SQLite3: {sqlite_bin}{kernel_summary}\")\nprint(f\"[NEXUS-OMNI-RUNTIME] Output Forge Dir: {out_dir} | Workspace Files: {len(ts_files)} ({round(total_bytes/1024, 1)} KB) | TaskHash: {prompt_hash}\")",
+    "stdout": "[NEXUS-OMNI-RUNTIME] Python 3.11.2 on Linux (x86_64) | FFmpeg: /usr/bin/ffmpeg | Node: /usr/local/bin/node | SQLite3: none | MDL Density: 0.8118 (Entropy=4.22b)\n[NEXUS-OMNI-RUNTIME] Output Forge Dir: /tmp/nexus_runtime_artifacts/generated_files | Workspace Files: 258 (29441.4 KB) | TaskHash: 87c472883cfd",
+    "stderr": "",
+    "exitCode": 0,
+    "durationMs": 636,
+    "generatedFiles": [],
+    "generatedArtifacts": [],
+    "timestamp": 1795270561959
+  }
+]

@@ -1,0 +1,30 @@
+{
+  "updatedAt": 1795430000307,
+  "cooldowns": {
+    "gemini-nano-banana-2.1": 1795430599993,
+    "gemini-3-pro-image": 1795430600153,
+    "gemini-3.1-flash-lite-image": 1795430600307
+  },
+  "lastErrors": {
+    "gemini-2.5-flash": {
+      "code": "503_UNAVAILABLE",
+      "snippet": "{\"error\":{\"code\":503,\"message\":\"This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.\",\"status\":\"UNA",
+      "at": 1795429997234
+    },
+    "gemini-nano-banana-2.1": {
+      "code": "429_LIMIT_ZERO",
+      "snippet": "{\"error\":{\"code\":429,\"message\":\"You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https:",
+      "at": 1795429999993
+    },
+    "gemini-3-pro-image": {
+      "code": "429_LIMIT_ZERO",
+      "snippet": "{\"error\":{\"code\":429,\"message\":\"You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https:",
+      "at": 1795430000153
+    },
+    "gemini-3.1-flash-lite-image": {
+      "code": "429_LIMIT_ZERO",
+      "snippet": "{\"error\":{\"code\":429,\"message\":\"You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https:",
+      "at": 1795430000307
+    }
+  }
+}

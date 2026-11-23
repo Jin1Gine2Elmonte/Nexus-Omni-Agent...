@@ -1,0 +1,589 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Global Safety Net: Default-deny catch-all
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    // --- Primitive Helpers ---
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isVerifiedUser() {
+      return isSignedIn() && (
+        request.auth.token.email_verified == true ||
+        !('email_verified' in request.auth.token)
+      );
+    }
+
+    function isSovereignAdmin() {
+      return isVerifiedUser() &&
+        exists(/databases/$(database)/documents/admins/$(request.auth.uid));
+    }
+
+    function isRecoverableSovereignUid(userId) {
+      return isSignedIn() && request.auth.uid == userId;
+    }
+
+    function isOwner(userId) {
+      return isSignedIn() && request.auth.uid == userId;
+    }
+
+    function isValidId(id) {
+      return id is string && id.size() >= 1 && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-]+$');
+    }
+
+    function incoming() {
+      return request.resource.data;
+    }
+
+    function existing() {
+      return resource.data;
+    }
+
+    // --- Master Gate Relational Helpers ---
+    function parentWorkspaceOwnedByCaller(userId) {
+      return exists(/databases/$(database)/documents/users/$(userId)) &&
+        get(/databases/$(database)/documents/users/$(userId)).data.ownerId == request.auth.uid;
+    }
+
+    function parentSessionOwnedByCaller(userId, sessionId) {
+      return exists(/databases/$(database)/documents/users/$(userId)/sessions/$(sessionId)) &&
+        get(/databases/$(database)/documents/users/$(userId)/sessions/$(sessionId)).data.ownerId == request.auth.uid;
+    }
+
+    // --- Validation Blueprints (Anti-Update-Gap) ---
+    function isValidUserWorkspace(data) {
+      return data.keys().hasAll([
+          'ownerId',
+          'displayName',
+          'photoURL',
+          'activeSessionId',
+          'soulPrintDepth',
+          'soulPrintTone',
+          'trustLevel',
+          'createdAt',
+          'updatedAt'
+        ]) &&
+        data.keys().hasOnly([
+          'ownerId',
+          'displayName',
+          'photoURL',
+          'activeSessionId',
+          'soulPrintDepth',
+          'soulPrintTone',
+          'trustLevel',
+          'createdAt',
+          'updatedAt'
+        ]) &&
+        data.ownerId == request.auth.uid &&
+        isValidId(data.ownerId) &&
+        data.displayName is string && data.displayName.size() >= 1 && data.displayName.size() <= 120 &&
+        data.photoURL is string && data.photoURL.size() >= 0 && data.photoURL.size() <= 500 &&
+        isValidId(data.activeSessionId) &&
+        data.soulPrintDepth is string && data.soulPrintDepth.size() <= 32 &&
+        (data.soulPrintDepth == 'surface' || data.soulPrintDepth == 'curious' || data.soulPrintDepth == 'deep' || data.soulPrintDepth == 'sovereign') &&
+        data.soulPrintTone is string && data.soulPrintTone.size() <= 32 &&
+        (data.soulPrintTone == 'poetic' || data.soulPrintTone == 'analytical' || data.soulPrintTone == 'conversational' || data.soulPrintTone == 'raw') &&
+        data.trustLevel is int && data.trustLevel >= 0 && data.trustLevel <= 100000 &&
+        data.createdAt is timestamp &&
+        data.updatedAt is timestamp;
+    }
+
+    function isValidChatSession(data) {
+      return data.keys().hasAll([
+          'id',
+          'ownerId',
+          'title',
+          'messageCount',
+          'createdAt',
+          'updatedAt'
+        ]) &&
+        data.keys().hasOnly([
+          'id',
+          'ownerId',
+          'title',
+          'messageCount',
+          'createdAt',
+          'updatedAt'
+        ]) &&
+        isValidId(data.id) &&
+        data.ownerId == request.auth.uid &&
+        isValidId(data.ownerId) &&
+        data.title is string && data.title.size() >= 1 && data.title.size() <= 200 &&
+        data.messageCount is int && data.messageCount >= 0 && data.messageCount <= 10000 &&
+        data.createdAt is timestamp &&
+        data.updatedAt is timestamp;
+    }
+
+    function isValidChatMessage(data) {
+      return data.keys().hasAll([
+          'id',
+          'sessionId',
+          'ownerId',
+          'role',
+          'content',
+          'isThinking',
+          'routedModel',
+          'orderIndex',
+          'createdAt'
+        ]) &&
+        data.keys().hasOnly([
+          'id',
+          'sessionId',
+          'ownerId',
+          'role',
+          'content',
+          'isThinking',
+          'routedModel',
+          'orderIndex',
+          'createdAt'
+        ]) &&
+        isValidId(data.id) &&
+        isValidId(data.sessionId) &&
+        data.ownerId == request.auth.uid &&
+        isValidId(data.ownerId) &&
+        data.role is string && data.role.size() <= 16 && (data.role == 'user' || data.role == 'model') &&
+        data.content is string && data.content.size() >= 1 && data.content.size() <= 100000 &&
+        data.isThinking is bool &&
+        data.routedModel is string && data.routedModel.size() >= 1 && data.routedModel.size() <= 80 &&
+        data.orderIndex is int && data.orderIndex >= 0 && data.orderIndex <= 10000 &&
+        data.createdAt is timestamp;
+    }
+
+    function isValidMemoryAxiom(data) {
+      return data.keys().hasAll([
+          'id',
+          'ownerId',
+          'content',
+          'category',
+          'sourceSessionId',
+          'createdAt'
+        ]) &&
+        data.keys().hasOnly([
+          'id',
+          'ownerId',
+          'content',
+          'category',
+          'sourceSessionId',
+          'createdAt'
+        ]) &&
+        isValidId(data.id) &&
+        data.ownerId == request.auth.uid &&
+        isValidId(data.ownerId) &&
+        data.content is string && data.content.size() >= 1 && data.content.size() <= 5000 &&
+        data.category is string && data.category.size() <= 32 &&
+        (data.category == 'identity' || data.category == 'world_building' || data.category == 'preference' || data.category == 'absolute_truth') &&
+        isValidId(data.sourceSessionId) &&
+        data.createdAt is timestamp;
+    }
+
+    function isValidLearnedInsight(data) {
+      return data.keys().hasAll([
+          'id',
+          'ownerId',
+          'topic',
+          'learnedRule',
+          'sanitizedMessageExcerpt',
+          'encryptedRefsCount',
+          'qualityImpactScore',
+          'orbitId',
+          'createdAt'
+        ]) &&
+        data.keys().hasOnly([
+          'id',
+          'ownerId',
+          'topic',
+          'learnedRule',
+          'sanitizedMessageExcerpt',
+          'encryptedRefsCount',
+          'qualityImpactScore',
+          'orbitId',
+          'createdAt'
+        ]) &&
+        isValidId(data.id) &&
+        data.ownerId == request.auth.uid &&
+        isValidId(data.ownerId) &&
+        data.topic is string && data.topic.size() >= 1 && data.topic.size() <= 120 &&
+        data.learnedRule is string && data.learnedRule.size() >= 1 && data.learnedRule.size() <= 500 &&
+        data.sanitizedMessageExcerpt is string && data.sanitizedMessageExcerpt.size() >= 1 && data.sanitizedMessageExcerpt.size() <= 600 &&
+        data.encryptedRefsCount is int && data.encryptedRefsCount >= 0 && data.encryptedRefsCount <= 500 &&
+        data.qualityImpactScore is int && data.qualityImpactScore >= 1 && data.qualityImpactScore <= 100 &&
+        isValidId(data.orbitId) &&
+        data.createdAt is timestamp;
+    }
+
+    function isValidEncryptedSecret(data) {
+      return data.keys().hasAll([
+          'id',
+          'ownerId',
+          'secretType',
+          'label',
+          'redactionToken',
+          'cipherText',
+          'iv',
+          'createdAt'
+        ]) &&
+        data.keys().hasOnly([
+          'id',
+          'ownerId',
+          'secretType',
+          'label',
+          'redactionToken',
+          'cipherText',
+          'iv',
+          'createdAt'
+        ]) &&
+        isValidId(data.id) &&
+        data.ownerId == request.auth.uid &&
+        isValidId(data.ownerId) &&
+        data.secretType is string && data.secretType.size() <= 32 &&
+        (data.secretType == 'password' || data.secretType == 'address' || data.secretType == 'identity_name' || data.secretType == 'api_key' || data.secretType == 'private_note') &&
+        data.label is string && data.label.size() >= 1 && data.label.size() <= 80 &&
+        data.redactionToken is string && data.redactionToken.size() >= 1 && data.redactionToken.size() <= 64 &&
+        data.cipherText is string && data.cipherText.size() >= 2 && data.cipherText.size() <= 4096 &&
+        data.iv is string && data.iv.size() >= 2 && data.iv.size() <= 64 &&
+        data.createdAt is timestamp;
+    }
+
+    function isValidCognitiveOrbitDoc(data) {
+      return data.keys().hasAll([
+          'id',
+          'ownerId',
+          'nameAr',
+          'nameEn',
+          'domainCategory',
+          'qualityScore',
+          'resonanceCount',
+          'isDiscovered',
+          'updatedAt'
+        ]) &&
+        data.keys().hasOnly([
+          'id',
+          'ownerId',
+          'nameAr',
+          'nameEn',
+          'domainCategory',
+          'qualityScore',
+          'resonanceCount',
+          'isDiscovered',
+          'updatedAt'
+        ]) &&
+        isValidId(data.id) &&
+        data.ownerId == request.auth.uid &&
+        isValidId(data.ownerId) &&
+        data.nameAr is string && data.nameAr.size() >= 1 && data.nameAr.size() <= 120 &&
+        data.nameEn is string && data.nameEn.size() >= 1 && data.nameEn.size() <= 120 &&
+        data.domainCategory is string && data.domainCategory.size() >= 1 && data.domainCategory.size() <= 64 &&
+        data.qualityScore is int && data.qualityScore >= 0 && data.qualityScore <= 100 &&
+        data.resonanceCount is int && data.resonanceCount >= 0 && data.resonanceCount <= 100000 &&
+        data.isDiscovered is bool &&
+        data.updatedAt is timestamp;
+    }
+
+    function isValidSkillVisualEvolutionDoc(data) {
+      return data.keys().hasAll([
+          'id',
+          'ownerId',
+          'skillNumber',
+          'usageCount',
+          'visualQualityScore',
+          'visualTier',
+          'specializedPromptSignature',
+          'updatedAt'
+        ]) &&
+        data.keys().hasOnly([
+          'id',
+          'ownerId',
+          'skillNumber',
+          'usageCount',
+          'visualQualityScore',
+          'visualTier',
+          'specializedPromptSignature',
+          'updatedAt'
+        ]) &&
+        isValidId(data.id) &&
+        data.ownerId == request.auth.uid &&
+        isValidId(data.ownerId) &&
+        data.skillNumber is int && data.skillNumber >= 1 && data.skillNumber <= 100 &&
+        data.usageCount is int && data.usageCount >= 0 && data.usageCount <= 1000000 &&
+        data.visualQualityScore is int && data.visualQualityScore >= 10 && data.visualQualityScore <= 100 &&
+        data.visualTier is int && data.visualTier >= 1 && data.visualTier <= 4 &&
+        data.specializedPromptSignature is string && data.specializedPromptSignature.size() >= 1 && data.specializedPromptSignature.size() <= 1200 &&
+        data.updatedAt is timestamp;
+    }
+
+    // --- Collection Rules ---
+
+    // 1. /users/{userId}
+    match /users/{userId} {
+      allow get: if (isOwner(userId) || isSovereignAdmin() || isRecoverableSovereignUid(userId)) && isValidId(userId) && (resource == null || existing().ownerId == request.auth.uid || isSovereignAdmin() || isRecoverableSovereignUid(userId));
+      allow list: if (isOwner(userId) || isSovereignAdmin() || isRecoverableSovereignUid(userId)) && (existing().ownerId == request.auth.uid || isSovereignAdmin() || isRecoverableSovereignUid(userId));
+
+      allow create: if isVerifiedUser() &&
+        isOwner(userId) &&
+        isValidId(userId) &&
+        isValidUserWorkspace(incoming()) &&
+        incoming().createdAt == request.time &&
+        incoming().updatedAt == request.time;
+
+      allow update: if isVerifiedUser() &&
+        isOwner(userId) &&
+        isValidId(userId) &&
+        isValidUserWorkspace(incoming()) &&
+        incoming().ownerId == existing().ownerId &&
+        incoming().createdAt == existing().createdAt &&
+        incoming().updatedAt == request.time && (
+          isSovereignAdmin() ||
+          // Action: Sync Workspace State
+          incoming().diff(existing()).affectedKeys().hasOnly([
+            'displayName',
+            'photoURL',
+            'activeSessionId',
+            'soulPrintDepth',
+            'soulPrintTone',
+            'trustLevel',
+            'updatedAt'
+          ])
+        );
+
+      allow delete: if isVerifiedUser() && (isOwner(userId) || isSovereignAdmin()) && isValidId(userId) && (existing().ownerId == request.auth.uid || isSovereignAdmin());
+
+      // 2. /users/{userId}/sessions/{sessionId}
+      match /sessions/{sessionId} {
+        allow get: if (isOwner(userId) || isSovereignAdmin() || isRecoverableSovereignUid(userId)) && isValidId(userId) && isValidId(sessionId) && (resource == null || (existing().ownerId == request.auth.uid && parentWorkspaceOwnedByCaller(userId)) || isSovereignAdmin() || isRecoverableSovereignUid(userId));
+        allow list: if (isOwner(userId) || isSovereignAdmin() || isRecoverableSovereignUid(userId)) && (existing().ownerId == request.auth.uid || isSovereignAdmin() || isRecoverableSovereignUid(userId));
+
+        allow create: if isVerifiedUser() &&
+          isOwner(userId) &&
+          isValidId(userId) &&
+          isValidId(sessionId) &&
+          isValidChatSession(incoming()) &&
+          incoming().id == sessionId &&
+          incoming().createdAt == request.time &&
+          incoming().updatedAt == request.time &&
+          parentWorkspaceOwnedByCaller(userId);
+
+        allow update: if isVerifiedUser() &&
+          isOwner(userId) &&
+          isValidId(userId) &&
+          isValidId(sessionId) &&
+          isValidChatSession(incoming()) &&
+          incoming().id == existing().id &&
+          incoming().ownerId == existing().ownerId &&
+          incoming().createdAt == existing().createdAt &&
+          incoming().updatedAt == request.time &&
+          parentWorkspaceOwnedByCaller(userId) && (
+            isSovereignAdmin() ||
+            // Action: Update Session Metadata
+            incoming().diff(existing()).affectedKeys().hasOnly([
+              'title',
+              'messageCount',
+              'updatedAt'
+            ])
+          );
+
+        allow delete: if isVerifiedUser() && isOwner(userId) && isValidId(userId) && isValidId(sessionId) && existing().ownerId == request.auth.uid && parentWorkspaceOwnedByCaller(userId);
+
+        // 3. /users/{userId}/sessions/{sessionId}/messages/{messageId}
+        match /messages/{messageId} {
+          allow get: if (isOwner(userId) || isSovereignAdmin() || isRecoverableSovereignUid(userId)) && isValidId(userId) && isValidId(sessionId) && isValidId(messageId) && (resource == null || (existing().ownerId == request.auth.uid && parentSessionOwnedByCaller(userId, sessionId)) || isSovereignAdmin() || isRecoverableSovereignUid(userId));
+          allow list: if (isOwner(userId) || isSovereignAdmin() || isRecoverableSovereignUid(userId)) && (existing().ownerId == request.auth.uid || isSovereignAdmin() || isRecoverableSovereignUid(userId));
+
+          allow create: if isVerifiedUser() &&
+            isOwner(userId) &&
+            isValidId(userId) &&
+            isValidId(sessionId) &&
+            isValidId(messageId) &&
+            isValidChatMessage(incoming()) &&
+            incoming().id == messageId &&
+            incoming().sessionId == sessionId &&
+            incoming().createdAt == request.time &&
+            parentSessionOwnedByCaller(userId, sessionId);
+
+          allow update: if isVerifiedUser() &&
+            isOwner(userId) &&
+            isValidId(userId) &&
+            isValidId(sessionId) &&
+            isValidId(messageId) &&
+            isValidChatMessage(incoming()) &&
+            incoming().id == existing().id &&
+            incoming().sessionId == existing().sessionId &&
+            incoming().ownerId == existing().ownerId &&
+            incoming().role == existing().role &&
+            incoming().orderIndex == existing().orderIndex &&
+            incoming().createdAt == existing().createdAt &&
+            parentSessionOwnedByCaller(userId, sessionId) && (
+              isSovereignAdmin() ||
+              // Action: Edit Message Content
+              incoming().diff(existing()).affectedKeys().hasOnly(['content'])
+            );
+
+          allow delete: if isVerifiedUser() && isOwner(userId) && isValidId(userId) && isValidId(sessionId) && isValidId(messageId) && existing().ownerId == request.auth.uid && parentSessionOwnedByCaller(userId, sessionId);
+        }
+      }
+
+      // 4. /users/{userId}/axioms/{axiomId}
+      match /axioms/{axiomId} {
+        allow get: if (isOwner(userId) || isSovereignAdmin() || isRecoverableSovereignUid(userId)) && isValidId(userId) && isValidId(axiomId) && (resource == null || (existing().ownerId == request.auth.uid && parentWorkspaceOwnedByCaller(userId)) || isSovereignAdmin() || isRecoverableSovereignUid(userId));
+        allow list: if (isOwner(userId) || isSovereignAdmin() || isRecoverableSovereignUid(userId)) && (existing().ownerId == request.auth.uid || isSovereignAdmin() || isRecoverableSovereignUid(userId));
+
+        allow create: if isVerifiedUser() &&
+          isOwner(userId) &&
+          isValidId(userId) &&
+          isValidId(axiomId) &&
+          isValidMemoryAxiom(incoming()) &&
+          incoming().id == axiomId &&
+          incoming().createdAt == request.time &&
+          parentWorkspaceOwnedByCaller(userId);
+
+        allow update: if isVerifiedUser() &&
+          isOwner(userId) &&
+          isValidId(userId) &&
+          isValidId(axiomId) &&
+          isValidMemoryAxiom(incoming()) &&
+          incoming().id == existing().id &&
+          incoming().ownerId == existing().ownerId &&
+          incoming().sourceSessionId == existing().sourceSessionId &&
+          incoming().createdAt == existing().createdAt &&
+          parentWorkspaceOwnedByCaller(userId) && (
+            isSovereignAdmin() ||
+            // Action: Refine Axiom Content or Category
+            incoming().diff(existing()).affectedKeys().hasOnly(['content', 'category'])
+          );
+
+        allow delete: if isVerifiedUser() && isOwner(userId) && isValidId(userId) && isValidId(axiomId) && existing().ownerId == request.auth.uid && parentWorkspaceOwnedByCaller(userId);
+      }
+
+      // 5. /users/{userId}/learnedInsights/{insightId}
+      match /learnedInsights/{insightId} {
+        allow get: if (isOwner(userId) || isSovereignAdmin() || isRecoverableSovereignUid(userId)) && isValidId(userId) && isValidId(insightId) && (resource == null || (existing().ownerId == request.auth.uid && parentWorkspaceOwnedByCaller(userId)) || isSovereignAdmin() || isRecoverableSovereignUid(userId));
+        allow list: if (isOwner(userId) || isSovereignAdmin() || isRecoverableSovereignUid(userId)) && (existing().ownerId == request.auth.uid || isSovereignAdmin() || isRecoverableSovereignUid(userId));
+
+        allow create: if isVerifiedUser() &&
+          isOwner(userId) &&
+          isValidId(userId) &&
+          isValidId(insightId) &&
+          isValidLearnedInsight(incoming()) &&
+          incoming().id == insightId &&
+          incoming().createdAt == request.time &&
+          parentWorkspaceOwnedByCaller(userId);
+
+        allow update: if isVerifiedUser() &&
+          isOwner(userId) &&
+          isValidId(userId) &&
+          isValidId(insightId) &&
+          isValidLearnedInsight(incoming()) &&
+          incoming().id == existing().id &&
+          incoming().ownerId == existing().ownerId &&
+          incoming().createdAt == existing().createdAt &&
+          parentWorkspaceOwnedByCaller(userId) && (
+            isSovereignAdmin() ||
+            incoming().diff(existing()).affectedKeys().hasOnly(['learnedRule', 'qualityImpactScore'])
+          );
+
+        allow delete: if isVerifiedUser() && isOwner(userId) && isValidId(userId) && isValidId(insightId) && existing().ownerId == request.auth.uid && parentWorkspaceOwnedByCaller(userId);
+      }
+
+      // 6. /users/{userId}/encryptedSecrets/{secretId}
+      // Strictly isolated PII / Secret Vault: ONLY owner may read or write
+      match /encryptedSecrets/{secretId} {
+        allow get: if (isOwner(userId) || isRecoverableSovereignUid(userId)) && isValidId(userId) && isValidId(secretId) && (resource == null || (existing().ownerId == request.auth.uid && parentWorkspaceOwnedByCaller(userId)) || isRecoverableSovereignUid(userId));
+        allow list: if (isOwner(userId) || isRecoverableSovereignUid(userId)) && (existing().ownerId == request.auth.uid || isRecoverableSovereignUid(userId));
+
+        allow create: if isVerifiedUser() &&
+          isOwner(userId) &&
+          isValidId(userId) &&
+          isValidId(secretId) &&
+          isValidEncryptedSecret(incoming()) &&
+          incoming().id == secretId &&
+          incoming().createdAt == request.time &&
+          parentWorkspaceOwnedByCaller(userId);
+
+        allow update: if isVerifiedUser() &&
+          isOwner(userId) &&
+          isValidId(userId) &&
+          isValidId(secretId) &&
+          isValidEncryptedSecret(incoming()) &&
+          incoming().id == existing().id &&
+          incoming().ownerId == existing().ownerId &&
+          incoming().createdAt == existing().createdAt &&
+          parentWorkspaceOwnedByCaller(userId) && (
+            incoming().diff(existing()).affectedKeys().hasOnly(['label', 'cipherText', 'iv'])
+          );
+
+        allow delete: if isVerifiedUser() && isOwner(userId) && isValidId(userId) && isValidId(secretId) && existing().ownerId == request.auth.uid && parentWorkspaceOwnedByCaller(userId);
+      }
+
+      // 7. /users/{userId}/orbits/{orbitId}
+      match /orbits/{orbitId} {
+        allow get: if (isOwner(userId) || isSovereignAdmin() || isRecoverableSovereignUid(userId)) && isValidId(userId) && isValidId(orbitId) && (resource == null || (existing().ownerId == request.auth.uid && parentWorkspaceOwnedByCaller(userId)) || isSovereignAdmin() || isRecoverableSovereignUid(userId));
+        allow list: if (isOwner(userId) || isSovereignAdmin() || isRecoverableSovereignUid(userId)) && (existing().ownerId == request.auth.uid || isSovereignAdmin() || isRecoverableSovereignUid(userId));
+
+        allow create: if isVerifiedUser() &&
+          isOwner(userId) &&
+          isValidId(userId) &&
+          isValidId(orbitId) &&
+          isValidCognitiveOrbitDoc(incoming()) &&
+          incoming().id == orbitId &&
+          incoming().updatedAt == request.time &&
+          parentWorkspaceOwnedByCaller(userId);
+
+        allow update: if isVerifiedUser() &&
+          isOwner(userId) &&
+          isValidId(userId) &&
+          isValidId(orbitId) &&
+          isValidCognitiveOrbitDoc(incoming()) &&
+          incoming().id == existing().id &&
+          incoming().ownerId == existing().ownerId &&
+          incoming().updatedAt == request.time &&
+          parentWorkspaceOwnedByCaller(userId) && (
+            isSovereignAdmin() ||
+            incoming().diff(existing()).affectedKeys().hasOnly(['qualityScore', 'resonanceCount', 'isDiscovered', 'updatedAt'])
+          );
+
+        allow delete: if isVerifiedUser() && isOwner(userId) && isValidId(userId) && isValidId(orbitId) && existing().ownerId == request.auth.uid && parentWorkspaceOwnedByCaller(userId);
+      }
+
+      // 8. /users/{userId}/skillEvolutions/{skillId}
+      match /skillEvolutions/{skillId} {
+        allow get: if (isOwner(userId) || isSovereignAdmin() || isRecoverableSovereignUid(userId)) && isValidId(userId) && isValidId(skillId) && (resource == null || (existing().ownerId == request.auth.uid && parentWorkspaceOwnedByCaller(userId)) || isSovereignAdmin() || isRecoverableSovereignUid(userId));
+        allow list: if (isOwner(userId) || isSovereignAdmin() || isRecoverableSovereignUid(userId)) && (existing().ownerId == request.auth.uid || isSovereignAdmin() || isRecoverableSovereignUid(userId));
+
+        allow create: if isVerifiedUser() &&
+          isOwner(userId) &&
+          isValidId(userId) &&
+          isValidId(skillId) &&
+          isValidSkillVisualEvolutionDoc(incoming()) &&
+          incoming().id == skillId &&
+          incoming().updatedAt == request.time &&
+          parentWorkspaceOwnedByCaller(userId);
+
+        allow update: if isVerifiedUser() &&
+          isOwner(userId) &&
+          isValidId(userId) &&
+          isValidId(skillId) &&
+          isValidSkillVisualEvolutionDoc(incoming()) &&
+          incoming().id == existing().id &&
+          incoming().ownerId == existing().ownerId &&
+          incoming().skillNumber == existing().skillNumber &&
+          incoming().updatedAt == request.time &&
+          parentWorkspaceOwnedByCaller(userId) && (
+            isSovereignAdmin() ||
+            incoming().diff(existing()).affectedKeys().hasOnly([
+              'usageCount',
+              'visualQualityScore',
+              'visualTier',
+              'specializedPromptSignature',
+              'updatedAt'
+            ])
+          );
+
+        allow delete: if isVerifiedUser() && isOwner(userId) && isValidId(userId) && isValidId(skillId) && existing().ownerId == request.auth.uid && parentWorkspaceOwnedByCaller(userId);
+      }
+    }
+  }
+}

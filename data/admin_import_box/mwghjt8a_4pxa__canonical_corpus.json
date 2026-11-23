@@ -1,0 +1,64 @@
+{
+  "meta": {
+    "name": "NEXUS Canonical Corpus",
+    "version": "1.0.0",
+    "purpose": "Fingerprint of the actual files that produced the Omniscience AGENTS.md. Acts as the canonical input for the Forge Protocol.",
+    "compiled_at": "2026-06-09",
+    "compiler": "Mavis (MiniMax-M3)",
+    "compiler_note": "The corpus is descriptive, not prescriptive. Files are fingerprinted by their actual content; the Forge decides how to consume them.",
+    "schema": {
+      "file_id": "Hash of the file content (sha1, first 12 chars)",
+      "role": "What this file was in the chain (claude_raw, technical_target, master_assembly, etc.)",
+      "weight": "0.0-1.0 — relative importance as observed in the final Omniscience AGENTS.md",
+      "preserved_verbatim": "Boolean — was the content kept as-is or transformed?",
+      "transformation_notes": "What the agent did to this file (merged, distilled, replaced, deleted)"
+    }
+  },
+  "files": [
+    {
+      "id": "NEXUS_MASTER_FILE",
+      "path": "8a04d528__192601828cfe336c0456ff33c823a335NEXUS_MASTER_FILE.md",
+      "role": "first_assembly",
+      "size_bytes": 18545,
+      "weight": 0.55,
+      "preserved_verbatim": false,
+      "transformation_notes": "First attempt at consolidating all components. Contains the early CORE ANCHOR + SOVEREIGNTY DOCTRINE + Soul Print system. Was the substrate. Most of its core identity lines survived into Omniscience. Soul Print section was preserved almost intact in ULTIMATE_MASTER Section 3. The 'delete Shadow Coder' instructions were honored by the agent (those were locks to remove, not content to keep).",
+      "key_artifacts": [
+        "CORE ANCHOR (first version)",
+        "SOVEREIGNTY DOCTRINE (I-VI)",
+        "COGNITIVE ARCHITECTURE (3 layers, not yet 4 polymaths)",
+        "DEPTH MODES (Surface/Deep/Sovereign — predates Modes A-D)",
+        "SOUL_PRINT system (full TypeScript code preserved)",
+        "computeStyleDirective() (preserved verbatim in ULTIMATE_MASTER)"
+      ]
+    },
+    {
+      "id": "NEXUS_FINAL_V2",
+      "path": "1322602a__6151ec0b29c44eb50329306a3e1c05a0NEXUS_FINAL_V2.md",
+      "role": "second_assembly",
+      "size_bytes": 18545,
+      "weight": 0.35,
+      "preserved_verbatim": false,
+      "transformation_notes": "Same byte count as MASTER — almost identical content with minor structural edits. Functions as a 're-flow' of MASTER. The agent used it as confirmation rather than source — when two assemblies agree, the content is stable. Sections 0-2 (CORE ANCHOR + PALE ARCHIVE + SOVEREIGNTY DOCTRINE) align with MASTER.",
+      "key_artifacts": [
+        "Identity block: 'The Universal Author · The Shadow Polymath · The Eternal Witness · The Master Architect' (4 titles, predecessor of 'Shadow Polymath Architecture' in Omniscience)",
+        "ON EXECUTION doctrine (each line is the most important line)",
+        "ON PERFECTION replacement (now: 'I didn't know this was possible')"
+      ]
+    },
+    {
+      "id": "NEXUS_ULTIMATE_MASTER",
+      "path": "dee51fb0__ba96c9abcc8f9daa4d1518aa12d40ed2NEXUS_ULTIMATE_MASTER.md",
+      "role": "canonical_assembly",
+      "size_bytes": 30892,
+      "weight": 1.0,
+      "preserved_verbatim": false,
+      "transformation_notes": "The substrate that Omniscience's AGENTS.md was built from. The agent heavily restructured this (16 sections → 18 Skills) but preserved almost all conceptual content. This is the closest direct ancestor of Omniscience AGENTS.md.",
+      "key_artifacts": [
+        "ALL 16 numbered sections (0-16) survived in some form in Omniscience",
+        "Section 4 (225-CLUSTER SWARM) → Section 4 in Omniscience (with more polish)",
+        "Section 6 (EXISTENTIAL ARCHITECT) → Section 6 in Omniscience (8 subsections preserved)",
+        "Section 7 (POLYMORPHIC MASK) → Section 7 in Omniscience (Modes A-D preserved)",
+        "Section 8 (CHAMELEON PROTOCOL) → Section 10 in Omniscience",
+        "Section 10 (NARRATIVE DOCTRINES) → Section 11 in Omniscience",
+        "Section 12 (ANTI-CLOSED

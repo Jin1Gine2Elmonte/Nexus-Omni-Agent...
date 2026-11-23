@@ -1,0 +1,97 @@
+{
+  "Qwen-Image-2.1": {
+    "repo": "Qwen/Qwen-Image-2.1",
+    "files": [
+      {
+        "path": "README.md",
+        "bytes": 5707
+      },
+      {
+        "path": "model_index.json",
+        "bytes": 447
+      },
+      {
+        "path": "transformer/config.json",
+        "bytes": 370
+      },
+      {
+        "path": "scheduler/scheduler_config.json",
+        "bytes": 485
+      },
+      {
+        "path": "text_encoder/config.json",
+        "bytes": 1517
+      },
+      {
+        "path": "text_encoder/generation_config.json",
+        "bytes": 213
+      },
+      {
+        "path": "processor/chat_template.jinja",
+        "bytes": 5292
+      },
+      {
+        "path": "processor/preprocessor_config.json",
+        "bytes": 782
+      },
+      {
+        "path": "processor/tokenizer_config.json",
+        "bytes": 5445
+      },
+      {
+        "path": "processor/special_tokens_map.json",
+        "bytes": 613
+      }
+    ]
+  },
+  "Qwen-Image-2.1-Turbo": {
+    "repo": "Qwen/Qwen-Image-2.1-Turbo",
+    "files": [
+      {
+        "path": "README.md",
+        "bytes": 15116
+      },
+      {
+        "path": "model_index.json",
+        "bytes": 578
+      },
+      {
+        "path": "scheduler/scheduler_config.json",
+        "bytes": 486
+      },
+      {
+        "path": "processor/chat_template.jinja",
+        "bytes": 5292
+      },
+      {
+        "path": "processor/processor_config.json",
+        "bytes": 1300
+      },
+      {
+        "path": "processor/tokenizer_config.json",
+        "bytes": 705
+      }
+    ]
+  },
+  "Qwen-Image-Layered": {
+    "repo": "Qwen/Qwen-Image-Layered",
+    "files": [
+      {
+        "path": "README.md",
+        "bytes": 5492
+      },
+      {
+        "path": "model_index.json",
+        "bytes": 515
+      },
+      {
+        "path": "transformer/config.json",
+        "bytes": 424
+      },
+      {
+        "path": "scheduler/scheduler_config.json",
+        "bytes": 482
+      }
+    ]
+  }
+}
